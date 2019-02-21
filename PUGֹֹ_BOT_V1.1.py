@@ -11,6 +11,7 @@ token = 'NTQyMDM0ODY1NDIwNTAxMDM1.DzoRcA.'
 client = discord.client
 
 
+
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game(name='twitch.tv/ow_il'))
@@ -37,6 +38,28 @@ async def pug(ctx):
     choice2 = discord.Member
     choice3 = discord.Member
     choice4 = discord.Member
+    choices = [choice1, choice2, choice3, choice4]
+    async def role_arragement(list_of_roles, list_of_members_role, role_str, team_1_role, team_2_role):
+
+        index = 0
+        for i in choices:
+            if index < 3:
+                team_role = team_1_role
+                team_vc = team_1_vc
+                team_num = 1
+            else:
+                team_role = team_2_role
+                team_vc = team_2_vc
+                team_num = 2
+            i = random.choice(list_of_roles)
+            team_role = team_role + [i.mention]
+
+            await i.send("You're playing " + role_str + " for Team " + str(team_num) + ", at the PUG that took place in: ")
+            await i.send(datetime.datetime.now())
+            await i.move_to(team_vc)
+            list_of_roles.remove(i)
+            list_of_members_role.remove(i)
+            index = index + 1
 
     if len(member_list) < 12:
         # what to do if there are less then 12 people in the vc
@@ -67,38 +90,7 @@ async def pug(ctx):
                         list_of_supports = list_of_supports + [member]
 
                 if len(list_of_supports) == 4:
-                    choice1 = random.choice(list_of_supports)
-                    team_1_supports = team_1_supports + [choice1.mention]
-                    await choice1.send("You're playing SUPPORT for Team 1, at the PUG that took place in: ")
-                    await choice1.send(datetime.datetime.now())
-                    await choice1.move_to(team_1_vc)
-                    print(choice1)
-                    list_of_supports.remove(choice1)
-                    member_list.remove(choice1)
-                    choice2 = random.choice(list_of_supports)
-                    team_1_supports = team_1_supports + [choice2.mention]
-                    await choice2.send("You're playing SUPPORT for Team 1, at the PUG that took place in: ")
-                    await choice2.send(datetime.datetime.now())
-                    await choice2.move_to(team_1_vc)
-                    print(choice2)
-                    list_of_supports.remove(choice2)
-                    member_list.remove(choice2)
-                    choice3 = random.choice(list_of_supports)
-                    team_2_supports = team_2_supports + [choice3.mention]
-                    await choice3.send("You're playing SUPPORT for Team 2, at the PUG that took place in: ")
-                    await choice3.send(datetime.datetime.now())
-                    await choice3.move_to(team_2_vc)
-                    print(choice3)
-                    list_of_supports.remove(choice3)
-                    member_list.remove(choice3)
-                    choice4 = random.choice(list_of_supports)
-                    team_2_supports = team_2_supports + [choice4.mention]
-                    await choice4.send("You're playing SUPPORT for Team 2, at the PUG that took place in: ")
-                    await choice4.send(datetime.datetime.now())
-                    await choice4.move_to(team_2_vc)
-                    print('here it is')
-                    list_of_supports.remove(choice4)
-                    member_list.remove(choice4)
+                    role_arragement(list_of_supports, member_list, "SUPPORT", team_1_supports, team_2_supports)
                 while len(list_of_supports) > 4:
                     choice1 = random.choice(list_of_supports)
                     if Support in choice1.roles:
@@ -111,38 +103,7 @@ async def pug(ctx):
                 list_of_supports.remove(choice1)
 
             if len(list_of_supports) == 4:
-                choice1 = random.choice(list_of_supports)
-                team_1_supports = team_1_supports + [choice1.mention]
-                await choice1.send("You're playing SUPPORT for Team 1, at the PUG that took place in: ")
-                await choice1.send(datetime.datetime.now())
-                await choice1.move_to(team_1_vc)
-                print(choice1)
-                list_of_supports.remove(choice1)
-                member_list.remove(choice1)
-                choice2 = random.choice(list_of_supports)
-                team_1_supports = team_1_supports + [choice2.mention]
-                await choice2.send("You're playing SUPPORT for Team 1, at the PUG that took place in: ")
-                await choice2.send(datetime.datetime.now())
-                await choice2.move_to(team_1_vc)
-                print(choice2)
-                list_of_supports.remove(choice2)
-                member_list.remove(choice2)
-                choice3 = random.choice(list_of_supports)
-                team_2_supports = team_2_supports + [choice3.mention]
-                await choice3.send("You're playing SUPPORT for Team 2, at the PUG that took place in: ")
-                await choice3.send(datetime.datetime.now())
-                await choice3.move_to(team_2_vc)
-                print(choice3)
-                list_of_supports.remove(choice3)
-                member_list.remove(choice3)
-                choice4 = random.choice(list_of_supports)
-                team_2_supports = team_2_supports + [choice4.mention]
-                await choice4.send("You're playing SUPPORT for Team 2, at the PUG that took place in: ")
-                await choice4.send(datetime.datetime.now())
-                await choice4.move_to(team_2_vc)
-                print(choice4)
-                list_of_supports.remove(choice4)
-                member_list.remove(choice4)
+                role_arragement(list_of_supports, member_list, "SUPPORT", team_1_supports, team_2_supports)
 
 
             # -----------------------------------------------------#
@@ -160,37 +121,7 @@ async def pug(ctx):
                     if Tank in member.roles:
                         list_of_tanks = list_of_tanks + [member]
                 if len(list_of_tanks) == 4:
-                    choice1 = random.choice(list_of_tanks)
-                    team_1_tanks = team_1_tanks + [choice1.mention]
-                    await choice1.send("You're playing TANK for Team 1, at the PUG that took place in: ")
-                    await choice1.send(datetime.datetime.now())
-                    await choice1.move_to(team_1_vc)
-                    list_of_tanks.remove(choice1)
-                    list_of_members_tank.remove(choice1)
-
-                    choice2 = random.choice(list_of_tanks)
-                    team_1_tanks = team_1_tanks + [choice2.mention]
-                    await choice2.send("You're playing TANK for Team 1, at the PUG that took place in: ")
-                    await choice2.send(datetime.datetime.now())
-                    await choice2.move_to(team_1_vc)
-                    list_of_tanks.remove(choice2)
-                    list_of_members_tank.remove(choice2)
-
-                    choice3 = random.choice(list_of_tanks)
-                    team_2_tanks = team_2_tanks + [choice3.mention]
-                    await choice3.send("You're playing TANK for Team 2, at the PUG that took place in: ")
-                    await choice3.send(datetime.datetime.now())
-                    await choice3.move_to(team_2_vc)
-                    list_of_tanks.remove(choice3)
-                    list_of_members_tank.remove(choice3)
-
-                    choice4 = random.choice(list_of_tanks)
-                    team_2_tanks = team_2_tanks + [choice4.mention]
-                    await choice4.send("You're playing TANK for Team 2, at the PUG that took place in: ")
-                    await choice4.send(datetime.datetime.now())
-                    await choice4.move_to(team_2_vc)
-                    list_of_tanks.remove(choice4)
-                    list_of_members_tank.remove(choice4)
+                    role_arragement(list_of_tanks, list_of_members_tank, "TANL", team_1_tanks, team_2_tanks)
                 while len(list_of_tanks) > 4:
                     choice1 = random.choice(list_of_tanks)
                     if Tank in choice1.roles:
@@ -201,39 +132,7 @@ async def pug(ctx):
                 list_of_tanks.remove(choice1)
 
             if len(list_of_tanks) == 4:
-                choice1 = random.choice(list_of_tanks)
-                team_1_tanks = team_1_tanks + [choice1.mention]
-                await choice1.send("You're playing TANK for Team 1, at the PUG that took place in: ")
-                await choice1.send(datetime.datetime.now())
-                await choice1.move_to(team_1_vc)
-                list_of_tanks.remove(choice1)
-                list_of_members_tank.remove(choice1)
-
-                choice2 = random.choice(list_of_tanks)
-                team_1_tanks = team_1_tanks + [choice2.mention]
-                await choice2.send("You're playing TANK for Team 1, at the PUG that took place in: ")
-                await choice2.send(datetime.datetime.now())
-                await choice2.move_to(team_1_vc)
-                list_of_tanks.remove(choice2)
-                list_of_members_tank.remove(choice2)
-
-                choice3 = random.choice(list_of_tanks)
-                team_2_tanks = team_2_tanks + [choice3.mention]
-                await choice3.send("You're playing TANK for Team 2, at the PUG that took place in: ")
-                await choice3.send(datetime.datetime.now())
-                await choice3.move_to(team_2_vc)
-                list_of_tanks.remove(choice3)
-                list_of_members_tank.remove(choice3)
-
-                choice4 = random.choice(list_of_tanks)
-                team_2_tanks = team_2_tanks + [choice4.mention]
-                await choice4.send("You're playing TANK for Team 2, at the PUG that took place in: ")
-                await choice4.send(datetime.datetime.now())
-                await choice4.move_to(team_2_vc)
-                list_of_tanks.remove(choice4)
-                list_of_members_tank.remove(choice4)
-
-
+                role_arragement(list_of_tanks, list_of_members_tank, "TANL", team_1_tanks, team_2_tanks)
 
             member_list = list_of_members_tank
 
@@ -259,37 +158,8 @@ async def pug(ctx):
                         list_of_dps = list_of_members_dps
 
                 if len(list_of_dps) == 4:
-                    choice1 = random.choice(list_of_dps)
-                    team_1_dps = team_1_dps + [choice1.mention]
-                    await choice1.send("You're playing DPS for Team 1, at the PUG that took place in: ")
-                    await choice1.send(datetime.datetime.now())
-                    await choice1.move_to(team_1_vc)
-                    list_of_dps.remove(choice1)
-                    list_of_members_dps.remove(choice1)
+                    role_arragement(list_of_dps, list_of_members_dps, "DPS", team_1_dps, team_2_dps)
 
-                    choice2 = random.choice(list_of_dps)
-                    team_1_dps = team_1_dps + [choice2.mention]
-                    await choice2.send("You're playing DPS for Team 1, at the PUG that took place in: ")
-                    await choice2.send(datetime.datetime.now())
-                    await choice2.move_to(team_1_vc)
-                    list_of_dps.remove(choice2)
-                    list_of_members_dps.remove(choice2)
-
-                    choice3 = random.choice(list_of_dps)
-                    team_2_dps = team_2_dps + [choice3.mention]
-                    await choice3.send("You're playing DPS for Team 2, at the PUG that took place in: ")
-                    await choice3.send(datetime.datetime.now())
-                    await choice3.move_to(team_2_vc)
-                    list_of_dps.remove(choice3)
-                    list_of_members_dps.remove(choice3)
-
-                    choice4 = random.choice(list_of_dps)
-                    team_2_dps = team_2_dps + [choice4.mention]
-                    await choice4.send("You're playing DPS for Team 2, at the PUG that took place in: ")
-                    await choice4.send(datetime.datetime.now())
-                    await choice4.move_to(team_2_vc)
-                    list_of_dps.remove(choice4)
-                    list_of_members_dps.remove(choice4)
 
                 while len(list_of_dps) > 4:
                     choice1 = random.choice(list_of_dps)
@@ -306,37 +176,7 @@ async def pug(ctx):
                     list_of_dps = list_of_members_dps
 
             if len(list_of_dps) == 4:
-                choice1 = random.choice(list_of_dps)
-                team_1_dps = team_1_dps + [choice1.mention]
-                await choice1.send("You're playing DPS for Team 1, at the PUG that took place in: ")
-                await choice1.send(datetime.datetime.now())
-                await choice1.move_to(team_1_vc)
-                list_of_members_dps.remove(choice1)
-                list_of_dps.remove(choice1)
-
-                choice2 = random.choice(list_of_dps)
-                team_1_dps = team_1_dps + [choice2.mention]
-                await choice2.send("You're playing DPS for Team 1, at the PUG that took place in: ")
-                await choice2.send(datetime.datetime.now())
-                await choice2.move_to(team_1_vc)
-                list_of_dps.remove(choice2)
-                list_of_members_dps.remove(choice2)
-
-                choice3 = random.choice(list_of_dps)
-                team_2_dps = team_2_dps + [choice3.mention]
-                await choice3.send("You're playing DPS for Team 2, at the PUG that took place in: ")
-                await choice3.send(datetime.datetime.now())
-                await choice3.move_to(team_2_vc)
-                list_of_members_dps.remove(choice3)
-                list_of_dps.remove(choice3)
-
-                choice4 = random.choice(list_of_dps)
-                team_2_dps = team_2_dps + [choice4.mention]
-                await choice4.send("You're playing DPS for Team 2, at the PUG that took place in: ")
-                await choice4.send(datetime.datetime.now())
-                await choice4.move_to(team_2_vc)
-                list_of_members_dps.remove(choice4)
-                list_of_dps.remove(choice4)
+                role_arragement(list_of_dps, list_of_members_dps, "DPS", team_1_dps, team_2_dps)
 
             print(member_list)
             await ctx.send('```Team 1:```' + ' ```Supports```' + " " + str(team_1_supports) + '```Tanks```' + '' + str(
@@ -367,4 +207,3 @@ async def clear(ctx):
 
 
 bot.run(token)
-
